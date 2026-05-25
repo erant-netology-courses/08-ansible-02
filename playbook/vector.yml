@@ -28,6 +28,13 @@
         remote_src: yes
         extra_opts: ["--strip-components=1"]
 
+    - name: Create config directory
+      become: true
+      ansible.builtin.file:
+        path: /etc/vector
+        state: directory
+        mode: '0755'
+
     - name: Deploy Vector config
       become: true
       ansible.builtin.template:
