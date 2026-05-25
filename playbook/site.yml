@@ -8,7 +8,8 @@
         name: clickhouse-server
         state: restarted
   tasks:
-    - block:
+    - name: Download Clickhouse packages
+      block:
         - name: Get clickhouse distrib
           ansible.builtin.get_url:
             url: "https://packages.clickhouse.com/deb/pool/main/c/clickhouse/{{ item }}_{{ clickhouse_version }}_amd64.deb"
