@@ -21,7 +21,6 @@
             url: "https://packages.clickhouse.com/deb/pool/main/c/clickhouse/clickhouse-common-static_{{ clickhouse_version }}_amd64.deb"
             dest: "/tmp/clickhouse-common-static_{{ clickhouse_version }}.deb"
             mode: '0644'
-
     - name: Install clickhouse packages
       become: true
       ansible.builtin.shell: |
@@ -29,10 +28,8 @@
               /tmp/clickhouse-client_{{ clickhouse_version }}.deb \
               /tmp/clickhouse-server_{{ clickhouse_version }}.deb
       notify: Start clickhouse service
-
     - name: Flush handlers
       meta: flush_handlers
-
     - name: Create database
       ansible.builtin.command: "clickhouse-client -q 'create database logs;'"
       register: create_db
