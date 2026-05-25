@@ -23,21 +23,21 @@
         - name: Get clickhouse distrib
           ansible.builtin.get_url:
             url: "https://packages.clickhouse.com/deb/pool/main/c/clickhouse/{{ item }}_{{ clickhouse_version }}_all.deb"
-            dest: "./{{ item }}_{{ clickhouse_version }}.deb"
+            dest: "/tmp/./{{ item }}_{{ clickhouse_version }}.deb"
           with_items: "{{ clickhouse_packages }}"
       rescue:
         - name: Get clickhouse distrib (fallback for amd64)
           ansible.builtin.get_url:
             url: "https://packages.clickhouse.com/deb/pool/main/c/clickhouse/clickhouse-common-static_{{ clickhouse_version }}_amd64.deb"
-            dest: "./clickhouse-common-static_{{ clickhouse_version }}.deb"
+            dest: "/tmp/./clickhouse-common-static_{{ clickhouse_version }}.deb"
 
     - name: Install clickhouse packages
       become: true
       ansible.builtin.apt:
         deb:
-          - ./clickhouse-common-static_{{ clickhouse_version }}.deb
-          - ./clickhouse-client_{{ clickhouse_version }}.deb
-          - ./clickhouse-server_{{ clickhouse_version }}.deb
+          - /tmp/clickhouse-common-static_{{ clickhouse_version }}.deb
+          - /tmp/clickhouse-client_{{ clickhouse_version }}.deb
+          - /tmp/clickhouse-server_{{ clickhouse_version }}.deb
       notify: Start clickhouse service
     - name: Flush handlers
       meta: flush_handlers
