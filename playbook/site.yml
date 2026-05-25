@@ -26,9 +26,8 @@
       become: true
       ansible.builtin.shell: |
         dpkg -i /tmp/clickhouse-common-static_{{ clickhouse_version }}.deb \
-               /tmp/clickhouse-client_{{ clickhouse_version }}.deb \
-               /tmp/clickhouse-server_{{ clickhouse_version }}.deb
-        apt-get install -f -y
+              /tmp/clickhouse-client_{{ clickhouse_version }}.deb \
+              /tmp/clickhouse-server_{{ clickhouse_version }}.deb
       notify: Start clickhouse service
 
     - name: Flush handlers
