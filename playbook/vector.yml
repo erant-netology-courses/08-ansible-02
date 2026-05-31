@@ -46,7 +46,7 @@
     - name: Find vector binary
       ansible.builtin.find:
         paths: /opt/vector
-        patterns: "*/bin/vector"
+        patterns: "vector"
         recurse: yes
         file_type: file
       register: vector_binary
