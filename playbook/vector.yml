@@ -43,6 +43,14 @@
         mode: '0644'
       notify: restart vector
 
+    - name: Find vector binary
+      ansible.builtin.find:
+        paths: /opt/vector
+        patterns: "*/bin/vector"
+        recurse: yes
+        file_type: file
+      register: vector_binary
+
     - name: Create vector systemd service
       become: true
       ansible.builtin.copy:
@@ -51,7 +59,7 @@
           Description=Vector
           After=network.target
           [Service]
-          ExecStart={{ vector_install_dir }}/bin/vector --config /etc/vector/vector.toml
+          ExecStart={{ vector_binary.files[0].path }} --config /etc/vector/vector.toml
           Restart=always
           [Install]
           WantedBy=multi-user.target
